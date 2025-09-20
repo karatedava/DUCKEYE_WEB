@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        .container {
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+        figure {
+            margin: 1.5rem 0;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        figcaption {
+            color: #555;
+            font-size: 1rem;
+            margin-top: 0.5rem;
+        }
+        table {
+            width: 100%;
+            max-width: 500px;
+            margin: 1.5rem auto;
+            border-collapse: collapse;
+            background: #fafafa;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #6200ea;
+            color: white;
+            font-weight: bold;
+        }
+        td {
+            color: #333;
+        }
+        a {
+            display: inline-block;
+            margin: 0.5rem 1rem;
+            padding: 0.75rem 1.5rem;
+            background-color: #6200ea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        a:hover {
+            background-color: #3700b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Analysis Results</h1>
+        <figure>
+            <img src="{{ url_for('static', filename='uploads/' + results.filename_original) }}" alt="Original Image" style="max-width: 300px;">
+            <figcaption>Original Image: {{ results.filename_original }}</figcaption>
+        </figure>
+        <figure>
+            <img src="{{ url_for('static', filename=results.plot_path | replace('static/', '')) }}" alt="Analysis Plot" style="max-width: 800px;">
+            <figcaption>Analysis Plot for: {{ results.filename_original }}</figcaption>
+        </figure>
+        <table>
+            <tr><th>Metric</th><th>Value</th></tr>
+            <tr><td>Calculated Density</td><td>{{ "%.4f"|format(results.calculated_density) }}</td></tr>
+            <tr><td>Segmented Density</td><td>{{ "%.4f"|format(results.segmented_density) }}</td></tr>
+            <tr><td>Predicted Biomass (g/m²)</td><td>{{ "%.3f"|format(results.predicted_biomass) }}</td></tr>
+        </table>
+        <a href="{{ csv_url }}">Download CSV</a>
+        <a href="/">Upload Another</a>
+    </div>
+</body>
+</html>
