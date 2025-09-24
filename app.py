@@ -57,7 +57,7 @@ def upload_file():
     results = duckeye.observe_single(filename)
     df = pd.DataFrame([results])
     csv_path = OUTPUT_PATH / f"{filename}_results.csv"
-    df.to_csv(csv_path, index=False)
+    # df.to_csv(csv_path, index=False)
 
     return render_template('results.html', results=results, csv_url=url_for('download_csv', filename=filename))
 
