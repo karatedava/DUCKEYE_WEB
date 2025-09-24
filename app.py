@@ -13,7 +13,7 @@ import src.preprocessing.preprocessing as prep
 app = Flask(__name__)
 app.secret_key = 'secret-key'
 app.config['UPLOAD_FOLDER'] = INPUT_PATH
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max upload
+app.config['MAX_CONTENT_LENGTH'] = 8 * 1024 * 1024  # 16MB max upload
 
 # Ensure directories exist
 INPUT_PATH.mkdir(exist_ok=True)
@@ -57,7 +57,7 @@ def upload_file():
     results = duckeye.observe_single(filename)
     df = pd.DataFrame([results])
     csv_path = OUTPUT_PATH / f"{filename}_results.csv"
-    # df.to_csv(csv_path, index=False)
+    df.to_csv(csv_path, index=False)
 
     return render_template('results.html', results=results, csv_url=url_for('download_csv', filename=filename))
 
